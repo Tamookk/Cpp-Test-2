@@ -10,6 +10,8 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <regex>
+#include <string>
 
 using namespace std;
 
@@ -17,6 +19,8 @@ class AlphabetThree
 {
 private:
     char* symbols;
+    int numLines;
+    string* mapData;
     map<string, map<int, string*>> mappedCodons;
 
 public:
@@ -25,6 +29,7 @@ public:
     void loadMapping(string fileName);
     void checkMapping();
     void mapCodons();
+    void listAminoAcids();
 };
 
 
