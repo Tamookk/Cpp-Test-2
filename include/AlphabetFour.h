@@ -9,9 +9,14 @@
 
 class AlphabetFour
 {
+private:
+    char* symbols[4];
+
 public:
     AlphabetFour();
+    ~AlphabetFour();
     void loadMapping();
+    void checkMapping();
     void mapCodons();
 };
 

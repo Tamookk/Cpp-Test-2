@@ -11,8 +11,20 @@ AlphabetFour::AlphabetFour()
 
 }
 
+// Destructor
+AlphabetFour::~AlphabetFour()
+{
+
+}
+
 // Load the mapping data
 void AlphabetFour::loadMapping()
+{
+
+}
+
+// Check that the mapping covers all possible codons
+void AlphabetFour::checkMapping()
 {
 
 }

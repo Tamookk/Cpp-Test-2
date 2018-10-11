@@ -6,6 +6,9 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "../include/AlphabetThree.h"
+#include "../include/AlphabetFour.h"
+
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -34,6 +37,18 @@ int main(int argc, char* argv[])
     // Grab the file names for the 2 required text files
     string codonFileName = string(argv[2]);
     string dataFileName = string(argv[3]);
+
+    // Make an AlphabetThree or AlphabetFour class depending on the CL argument
+    if(alphabetNum == 3)
+    {
+        AlphabetThree alphabet;
+        alphabet.loadMapping(codonFileName);
+    }
+    else if(alphabetNum == 4)
+    {
+        AlphabetFour alphabet;
+        alphabet.loadMapping();
+    }
 
     return 0;
 }
