@@ -1,14 +1,19 @@
 //
-// Created by Joshua on 11/10/2018.
+// Created by Joshua Sutton
+// 11/10/2018
 //
 
-#ifndef ASSIGNMENT_3_ALPHABETTHREE_H
-#define ASSIGNMENT_3_ALPHABETTHREE_H
+#ifndef ALPHABETTHREE_H
+#define ALPHABETTHREE_H
 
 
-class AlphabetThree {
-
+class AlphabetThree
+{
+public:
+    AlphabetThree();
+    void loadMapping();
+    void mapCodons();
 };
 
 
-#endif //ASSIGNMENT_3_ALPHABETTHREE_H
+#endif
