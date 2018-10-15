@@ -3,19 +3,23 @@
 // 11/10/2018
 //
 
+
+// Alphabets are fixed! ACTG for A4, ABC for A3
+// The objects the container stores are either A3 or A4
+// Check overall length of datafile - number of characters.
+    // Stop if not a factor of 3 or 4
+    // Stop if a character is wrong
+// Distribution of symbols - a count of how many of each letter there are
+// Print out the whole sequence
+// Display all of the encoded active amino acid chains
+
 #include "../include/AlphabetThree.h"
 
 // Constructor
-AlphabetThree::AlphabetThree()
-{
-    symbols = new char[3];
-}
+AlphabetThree::AlphabetThree() {}
 
 // Destructor
-AlphabetThree::~AlphabetThree()
-{
-    delete [] symbols;
-}
+AlphabetThree::~AlphabetThree() {}
 
 // Load the mapping data
 void AlphabetThree::loadMapping(string fileName)
@@ -62,7 +66,7 @@ void AlphabetThree::loadMapping(string fileName)
 // Check that the mapping covers all possible codons
 void AlphabetThree::checkMapping()
 {
-
+    string possibleCodons[20];
 }
 
 // Map codons to amino acids
@@ -78,8 +82,20 @@ void AlphabetThree::mapCodons()
         // Cut out the name of the amino acid
         line = line.substr(pos, line.length());
 
-        // Cut out whitespace/search for a base (any uppercase letter)
-        line = line.substr(line.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), line.length());
+        string lineCopy = line;
+
+        // Check if a character is not one of the three bases
+        for(int i = 0; i < line.length(); i++)
+        {
+            if(lineCopy.substr(i, i+1).find_first_of("DEFGHIJKLMNOPQRSTUVWXY") != string::npos)
+            {
+                cerr << "Non-standard base found. Exiting program." << endl;
+                exit(4);
+            }
+        }
+
+        // Cut out whitespace/search for a base
+        line = line.substr(line.find_first_of("ABC"), line.length());
 
         // Reset the string position
         pos = 0;
@@ -116,7 +132,7 @@ void AlphabetThree::mapCodons()
             // Trim out the codon and anything that isn't a base
             pos = line.find(',') + 1;
             line = line.substr(pos, line.length());
-            line = line.substr(line.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), line.length());
+            line = line.substr(line.find_first_of("ABC"), line.length());
             pos = 0;
         }
 

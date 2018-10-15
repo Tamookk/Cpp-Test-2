@@ -18,7 +18,7 @@ using namespace std;
 class AlphabetThree
 {
 private:
-    char* symbols;
+    char symbols[3] = {'A', 'B', 'C'};
     int numLines;
     string* mapData;
     map<string, map<int, string*>> mappedCodons;
