@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
         AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
         alphabet.mapCodons();
-        alphabet.listAminoAcids();
+        alphabet.checkMapping();;
     }
     else if(alphabetNum == 4)
     {

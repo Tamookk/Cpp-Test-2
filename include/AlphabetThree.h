@@ -6,22 +6,23 @@
 #ifndef ALPHABETTHREE_H
 #define ALPHABETTHREE_H
 
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <regex>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class AlphabetThree
 {
 private:
-    char symbols[3] = {'A', 'B', 'C'};
     int numLines;
+    vector<string> possibleCodons;
     string* mapData;
-    map<string, map<int, string*>> mappedCodons;
+    multimap<string, string> mappedCodons;
 
 public:
     AlphabetThree();

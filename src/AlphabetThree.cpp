@@ -16,7 +16,15 @@
 #include "../include/AlphabetThree.h"
 
 // Constructor
-AlphabetThree::AlphabetThree() {}
+AlphabetThree::AlphabetThree()
+{
+    // Insert the possible codons into a vector
+    string listOfCodons[] = {"AAA", "AAB", "AAC", "ABA", "ABB", "ABC", "ACA", "ACB", "ACC", "BAA", "BAB", "BAC",
+                             "BBA", "BBB", "BBC", "BCA", "BCB", "BCC", "CAA", "CAB", "CAC", "CBA", "CBB", "CBC",
+                             "CCA", "CCB", "CCC"};
+    for(int i = 0; i < 27; i++)
+        possibleCodons.insert(possibleCodons.end(), listOfCodons[i]);
+}
 
 // Destructor
 AlphabetThree::~AlphabetThree() {}
@@ -66,7 +74,19 @@ void AlphabetThree::loadMapping(string fileName)
 // Check that the mapping covers all possible codons
 void AlphabetThree::checkMapping()
 {
-    string possibleCodons[20];
+    for(auto item : mappedCodons)
+    {
+        if((find(possibleCodons.begin(), possibleCodons.end(), item.second)) != possibleCodons.end())
+        {
+            possibleCodons.erase(find(possibleCodons.begin(), possibleCodons.end(), item.second));
+        }
+    }
+
+    if(possibleCodons.size() != 0)
+    {
+        cerr << "Not all possible codons provided in mapping file. Exiting program." << endl;
+        exit(5);
+    }
 }
 
 // Map codons to amino acids
@@ -116,18 +136,17 @@ void AlphabetThree::mapCodons()
             }
         }
 
-        // Create an array of codons
+        // Add the codons to the multimap
         pos = 0;
-        string* codons = new string[numCodons];
         for(int i = 0; i < numCodons; i++)
         {
-            if(line.find(',', pos) == string::npos)
-            {
-                codons[i] = line;
+            if (line.find(',', pos) == string::npos) {
+                mappedCodons.insert(pair<string, string>(name, line));
                 break;
             }
-            // Put the codon into the array
-            codons[i] = line.substr(pos, line.find(','));
+
+            // Put the codon into the multimap
+            mappedCodons.insert(pair<string, string>(name, line.substr(pos, line.find(','))));
 
             // Trim out the codon and anything that isn't a base
             pos = line.find(',') + 1;
@@ -135,12 +154,6 @@ void AlphabetThree::mapCodons()
             line = line.substr(line.find_first_of("ABC"), line.length());
             pos = 0;
         }
-
-        // Insert the amino acid info into the map
-        map<int, string*> codon;
-        codon[numCodons] = codons;
-
-        mappedCodons[name] = codon;
     }
 }
 
@@ -150,12 +163,7 @@ void AlphabetThree::listAminoAcids()
     for(auto i = mappedCodons.begin(); i != mappedCodons.end(); i++)
     {
         cout << "Amino Acid: " << i->first << endl;
-        cout << "Codons: ";
-        for(auto j = i->second.begin(); j != i->second.end(); j++)
-        {
-            for(int k = 0; k < j->first; k++)
-                cout << j->second[k] << ",";
-        }
+        cout << "Codon: " << i->second << endl;
         cout << endl;
     }
 }
