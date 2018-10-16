@@ -6,18 +6,31 @@
 #ifndef ALPHABETFOUR_H
 #define ALPHABETFOUR_H
 
+#include <algorithm>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+
+using namespace std;
 
 class AlphabetFour
 {
 private:
-    char* symbols[4];
+    int numLines;
+    vector<string> possibleCodons;
+    string* mapData;
+    multimap<string, string> mappedCodons;
 
 public:
     AlphabetFour();
     ~AlphabetFour();
-    void loadMapping();
+    void loadMapping(string filename);
     void checkMapping();
     void mapCodons();
+    void listAminoAcids();
 };
 
 

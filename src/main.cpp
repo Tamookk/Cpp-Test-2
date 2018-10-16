@@ -49,7 +49,9 @@ int main(int argc, char* argv[])
     else if(alphabetNum == 4)
     {
         AlphabetFour alphabet;
-        alphabet.loadMapping();
+        alphabet.loadMapping(codonFileName);
+        alphabet.mapCodons();
+        alphabet.checkMapping();
     }
 
     return 0;
