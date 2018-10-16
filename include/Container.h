@@ -6,9 +6,11 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <map>
 // Class needs to:
 // > Report on and validate the length of the content
 //   - Must be a multiple of 3
@@ -36,6 +38,7 @@ private:
     int numBases;
     string dataFileName;
     string data;
+    map<char, int> baseDistribution;
 
 public:
     Container(int _numBases, string _dateFileName);
@@ -45,5 +48,101 @@ public:
     void processCodons();
 };
 
+
+// -- Function definitions are required in the header file, otherwise the program will not compile -- //
+// Constructor
+template <typename T>
+Container<T>::Container(int _numBases, string _dataFileName)
+{
+    alphabet = T();
+    numBases = _numBases;
+    dataFileName = _dataFileName;
+}
+
+// Validate the length of the data in the data file
+template <typename T>
+void Container<T>::validateLengthOfData()
+{
+    char ch;
+
+    // Open the map file
+    ifstream dataFile(dataFileName);
+
+    // Check if the file could be opened
+    if(dataFile.fail())
+    {
+        cerr << "Error opening file \"" << dataFileName << "\"." << endl;
+        dataFile.close();
+        exit(3);
+    }
+
+    // Grab each character from the map file
+    while(dataFile >> noskipws >> ch)
+    {
+        if(ch == '\n')
+        {
+            continue;
+        }
+        else
+        {
+            data += ch;
+        }
+    }
+
+    // Check if the data file has a correct amount of characters
+    if(data.length() % numBases != 0)
+    {
+        cerr << "Data file has incorrect amount of characters. Amount must be a multiple of " << numBases << "." << endl;
+        dataFile.close();
+        exit(5);
+    }
+
+    // Close the data file
+    dataFile.close();
+}
+
+// Get the distribution of symbols in the data file
+template <typename T>
+void Container<T>::getSymbolDistribution()
+{
+    // Loop through each character in the data
+    for(char &c : data)
+    {
+        // Check if the base is already in the map
+        map<char, int>::iterator it = baseDistribution.find(c);
+        if(it != baseDistribution.end())
+        {
+            // Add one to the count
+            it->second = it->second + 1;
+        }
+        else
+        {
+            // Otherwise insert the base into the map
+            baseDistribution.insert(pair<char, int>(c, 1));
+        }
+    }
+
+    // Print out the base distribution
+    cout << "==Base Distribution==" << endl;
+    for(auto c : baseDistribution)
+    {
+        cout << c.first << ": " << c.second << endl;
+    }
+    cout << endl;
+}
+
+// List the contents of the data file
+template <typename T>
+void Container<T>::listDataContents()
+{
+
+}
+
+// Process the codons within the data file
+template <typename T>
+void Container<T>::processCodons()
+{
+
+}
 
 #endif

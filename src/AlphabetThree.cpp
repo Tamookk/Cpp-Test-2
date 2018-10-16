@@ -43,7 +43,7 @@ void AlphabetThree::loadMapping(string fileName)
         codonMapFile.getline(fileLine, 256);
 
         // Break if the eof was reached
-        if (codonMapFile.eof())
+        if(codonMapFile.eof())
             break;
 
         numLines++;

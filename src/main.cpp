@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
     if(alphabetNum == 3)
     {
         Container<AlphabetThree> cont(3, dataFileName);
+        cont.validateLengthOfData();
+        cont.getSymbolDistribution();
         AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
         alphabet.mapCodons();
