@@ -135,7 +135,22 @@ void Container<T>::getSymbolDistribution()
 template <typename T>
 void Container<T>::listDataContents()
 {
+    int charNum = 0;
 
+    cout << "==Data of File==" << endl;
+
+    // Print out each character of the data, 60 characters per line
+    for(char &c : data)
+    {
+        if(charNum > 59)
+        {
+            cout << endl;
+            charNum = 0;
+        }
+        cout << c;
+        charNum++;
+    }
+    cout << endl << endl;
 }
 
 // Process the codons within the data file

@@ -45,6 +45,7 @@ int main(int argc, char* argv[])
         Container<AlphabetThree> cont(3, dataFileName);
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
+        cont.listDataContents();
         AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
         alphabet.mapCodons();
