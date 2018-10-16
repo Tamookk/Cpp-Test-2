@@ -3,16 +3,6 @@
 // 11/10/2018
 //
 
-
-// Alphabets are fixed! ACTG for A4, ABC for A3
-// The objects the container stores are either A3 or A4
-// Check overall length of datafile - number of characters.
-    // Stop if not a factor of 3 or 4
-    // Stop if a character is wrong
-// Distribution of symbols - a count of how many of each letter there are
-// Print out the whole sequence
-// Display all of the encoded active amino acid chains
-
 #include "../include/AlphabetThree.h"
 
 // Constructor

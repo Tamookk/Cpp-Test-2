@@ -8,6 +8,7 @@
 
 #include "../include/AlphabetThree.h"
 #include "../include/AlphabetFour.h"
+#include "../include/Container.h"
 
 using namespace std;
 
@@ -41,10 +42,11 @@ int main(int argc, char* argv[])
     // Make an AlphabetThree or AlphabetFour class depending on the CL argument
     if(alphabetNum == 3)
     {
+        Container<AlphabetThree> cont(3, dataFileName);
         AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
         alphabet.mapCodons();
-        alphabet.checkMapping();;
+        alphabet.checkMapping();
     }
     else if(alphabetNum == 4)
     {

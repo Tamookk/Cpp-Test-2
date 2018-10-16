@@ -6,13 +6,9 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-// "This class is for storing an ordered list of objects associated with the nucleotides."
-// What type are the objects? What does this mean?
-// > Store an ordered list - vector, map, etc.
-// > The list is of a type "object". This "object" is associated with the nucleotides.
-//   - i.e., AlphabetThree and AlphabetFour
-// > So, typename<T> is replaced by AlphabetThree or AlphabetFour
-
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
 // Class needs to:
 // > Report on and validate the length of the content
 //   - Must be a multiple of 3
@@ -29,12 +25,24 @@
 //   - If the end of the data is reached without a stop instruction, this should be reported
 //   - Report the number of codons NOT displayed between start and stop instructions, and at the beginning + end as appropriate
 
+using namespace std;
+
 template <typename T>
 
 class Container
 {
+private:
+    T alphabet;
+    int numBases;
+    string dataFileName;
+    string data;
+
 public:
-    Container();
+    Container(int _numBases, string _dateFileName);
+    void validateLengthOfData();
+    void getSymbolDistribution();
+    void listDataContents();
+    void processCodons();
 };
 
 
