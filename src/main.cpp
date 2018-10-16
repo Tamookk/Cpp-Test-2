@@ -42,21 +42,28 @@ int main(int argc, char* argv[])
     // Make an AlphabetThree or AlphabetFour class depending on the CL argument
     if(alphabetNum == 3)
     {
-        Container<AlphabetThree> cont(3, dataFileName);
+        Container<AlphabetThree> cont(dataFileName);
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
         cont.listDataContents();
         AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
-        alphabet.mapCodons();
+        multimap<string, string> mappedCodons = alphabet.mapCodons();
         alphabet.checkMapping();
+        cont.processCodons(mappedCodons);
     }
     else if(alphabetNum == 4)
     {
+        Container<AlphabetThree> cont(dataFileName);
+        cont.validateLengthOfData();
+        cont.getSymbolDistribution();
+        cont.listDataContents();
         AlphabetFour alphabet;
         alphabet.loadMapping(codonFileName);
         alphabet.mapCodons();
+        multimap<string, string> mappedCodons = alphabet.mapCodons();
         alphabet.checkMapping();
+        cont.processCodons(mappedCodons);
     }
 
     return 0;

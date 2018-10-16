@@ -35,27 +35,25 @@ class Container
 {
 private:
     T alphabet;
-    int numBases;
     string dataFileName;
     string data;
     map<char, int> baseDistribution;
 
 public:
-    Container(int _numBases, string _dateFileName);
+    Container(string _dataFileName);
     void validateLengthOfData();
     void getSymbolDistribution();
     void listDataContents();
-    void processCodons();
+    void processCodons(multimap<string, string> mappedCodons);
 };
 
 
 // -- Function definitions are required in the header file, otherwise the program will not compile -- //
 // Constructor
 template <typename T>
-Container<T>::Container(int _numBases, string _dataFileName)
+Container<T>::Container(string _dataFileName)
 {
     alphabet = T();
-    numBases = _numBases;
     dataFileName = _dataFileName;
 }
 
@@ -90,9 +88,9 @@ void Container<T>::validateLengthOfData()
     }
 
     // Check if the data file has a correct amount of characters
-    if(data.length() % numBases != 0)
+    if(data.length() % 3 != 0)
     {
-        cerr << "Data file has incorrect amount of characters. Amount must be a multiple of " << numBases << "." << endl;
+        cerr << "Data file has incorrect amount of characters. Amount must be a multiple of 3." << endl;
         dataFile.close();
         exit(5);
     }
@@ -155,9 +153,71 @@ void Container<T>::listDataContents()
 
 // Process the codons within the data file
 template <typename T>
-void Container<T>::processCodons()
+void Container<T>::processCodons(multimap<string, string> mappedCodons)
 {
+    int charNum = 0;
+    int sequenceNum = 1;
+    string aminoAcid;
+    int skippedCodons = 0;
+    int codonsProcessed = 0;
+    bool hasStarted = false;
 
+    string codon;
+
+    cout << endl << "==Codon Processing==" << endl;
+
+    // Search for a start codon
+    for(char &c : data)
+    {
+        // Match the codon against the mapped ones
+        if(charNum >= 3)
+        {
+            for(auto it = mappedCodons.begin(); it != mappedCodons.end(); it++)
+            {
+                if(it->second == codon)
+                {
+                    if(!hasStarted && it->first == "Start")
+                    {
+                        hasStarted = true;
+                        cout << skippedCodons << " codons skipped." << endl;
+                        skippedCodons = 0;
+                        cout << endl << "=Sequence " << sequenceNum << "=" << endl;
+                        cout << it->first;
+                    }
+                    else if(hasStarted && it->first == "Stop")
+                    {
+                        hasStarted = false;
+                        cout << "-Stop" << endl;
+                        cout << "Contains " << codonsProcessed  << " amino acids." << endl << endl;
+                        codonsProcessed = 0;
+                        sequenceNum++;
+                    }
+                    else if(hasStarted)
+                    {
+                        cout << "-" << it->first;
+                        codonsProcessed++;
+                    }
+                    else
+                    {
+                        skippedCodons++;
+                    }
+                    break;
+                }
+            }
+            charNum = 0;
+            codon = "";
+        }
+
+        // Add the char to the codon string
+        codon += c;
+        charNum++;
+    }
+
+    if(skippedCodons > 0)
+    {
+        cout << skippedCodons + 1 << " codons skipped." << endl << endl;
+    }
+    cout << "End of data." << endl;
 }
 
 #endif

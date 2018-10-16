@@ -29,7 +29,7 @@ public:
     ~AlphabetFour();
     void loadMapping(string filename);
     void checkMapping();
-    void mapCodons();
+    multimap<string, string> mapCodons();
     void listAminoAcids();
 };
 

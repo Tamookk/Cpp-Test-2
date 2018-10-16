@@ -82,7 +82,7 @@ void AlphabetFour::checkMapping()
 }
 
 // Map codons to amino acids
-void AlphabetFour::mapCodons()
+multimap<string, string> AlphabetFour::mapCodons()
 {
     for(int i = 0; i < numLines; i++)
     {
@@ -147,6 +147,8 @@ void AlphabetFour::mapCodons()
             pos = 0;
         }
     }
+
+    return mappedCodons;
 }
 
 // List the amino acids and their codons

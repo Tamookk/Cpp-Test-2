@@ -80,7 +80,7 @@ void AlphabetThree::checkMapping()
 }
 
 // Map codons to amino acids
-void AlphabetThree::mapCodons()
+multimap<string, string> AlphabetThree::mapCodons()
 {
     for(int i = 0; i < numLines; i++)
     {
@@ -145,6 +145,8 @@ void AlphabetThree::mapCodons()
             pos = 0;
         }
     }
+
+    return mappedCodons;
 }
 
 // List the amino acids and their codons
