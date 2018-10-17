@@ -40,13 +40,14 @@ int main(int argc, char* argv[])
     string dataFileName = string(argv[3]);
 
     // Make an AlphabetThree or AlphabetFour class depending on the CL argument
+    // and do the required processing on the codon mapping and data file.
     if(alphabetNum == 3)
     {
         Container<AlphabetThree> cont(dataFileName);
+        AlphabetThree alphabet = cont.generateAlphabet();
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
         cont.listDataContents();
-        AlphabetThree alphabet;
         alphabet.loadMapping(codonFileName);
         multimap<string, string> mappedCodons = alphabet.mapCodons();
         alphabet.checkMapping();
@@ -54,13 +55,12 @@ int main(int argc, char* argv[])
     }
     else if(alphabetNum == 4)
     {
-        Container<AlphabetThree> cont(dataFileName);
+        Container<AlphabetFour> cont(dataFileName);
+        AlphabetFour alphabet = cont.generateAlphabet();
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
         cont.listDataContents();
-        AlphabetFour alphabet;
         alphabet.loadMapping(codonFileName);
-        alphabet.mapCodons();
         multimap<string, string> mappedCodons = alphabet.mapCodons();
         alphabet.checkMapping();
         cont.processCodons(mappedCodons);

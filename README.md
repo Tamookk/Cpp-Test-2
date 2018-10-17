@@ -45,6 +45,9 @@ The program will quit if the amount of characters in the data file is not a mult
 * My compsci professor for teaching me C++ and setting this assignment.
 
 ## Changelog
+### 17-10-2018
+* Make Container class generate respective Alphabet class.
+
 ### 16-10-2018
 * Added checking the mapping of codons.
 

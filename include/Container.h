@@ -27,6 +27,7 @@ private:
 
 public:
     Container(string _dataFileName);
+    T generateAlphabet();
     void validateLengthOfData();
     void getSymbolDistribution();
     void listDataContents();
@@ -39,8 +40,15 @@ public:
 template <typename T>
 Container<T>::Container(string _dataFileName)
 {
-    alphabet = T();
     dataFileName = _dataFileName;
+}
+
+// Generate an AlphabetFour or AlphabetThree class
+template <typename T>
+T Container<T>::generateAlphabet()
+{
+    alphabet = T();
+    return alphabet;
 }
 
 // Validate the length of the data in the data file
@@ -181,7 +189,8 @@ void Container<T>::processCodons(multimap<string, string> mappedCodons)
                     else if(hasStarted)
                     {
                         cout << "-" << it->first;
-                        codonsProcessed++;
+                        if(it->first != "Start")
+                            codonsProcessed++;
                     }
                     else
                     {
