@@ -162,12 +162,11 @@ multimap<string, string> AlphabetThree::mapCodons()
             line = line.substr(line.find_first_of("ABC"), line.length());
             pos = 0;
         }
-
-        line.~string();
-        lineCopy.~string();
-        name.~string();
     }
 
+    checkMapping();
+
+    delete [] mapData;
 
     return mappedCodons;
 }

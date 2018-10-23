@@ -167,6 +167,8 @@ multimap<string, string> AlphabetFour::mapCodons()
 
     checkMapping();
 
+    delete [] mapData;
+
     return mappedCodons;
 }
 
