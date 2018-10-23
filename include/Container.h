@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <vector>
 
 // TODO: If the end of the data is reached without a stop instruction, this should be reported
 
@@ -20,34 +21,38 @@ template <class T>
 class Container
 {
 private:
-    T alphabet;
+    vector<T> bases;
+    string mapFileName;
     string dataFileName;
     string data;
     map<char, int> baseDistribution;
+    multimap<string, string> mappedCodons;
 
 public:
-    Container(string _dataFileName);
-    T generateAlphabet();
+    Container(string _mapFileName, string _dataFileName);
+    T generateAlphabet(char base);
     void validateLengthOfData();
     void getSymbolDistribution();
     void listDataContents();
-    void processCodons(multimap<string, string> mappedCodons);
+    void processCodons();
 };
 
 
 // -- Function definitions are required in the header file, otherwise the program will not compile -- //
 // Constructor
 template <typename T>
-Container<T>::Container(string _dataFileName)
+Container<T>::Container(string _mapFileName, string _dataFileName)
 {
+    mapFileName = _mapFileName;
     dataFileName = _dataFileName;
 }
 
 // Generate an AlphabetFour or AlphabetThree class
 template <typename T>
-T Container<T>::generateAlphabet()
+T Container<T>::generateAlphabet(char base)
 {
-    alphabet = T();
+    T alphabet = T();
+    alphabet.setBase(base);
     return alphabet;
 }
 
@@ -97,6 +102,8 @@ void Container<T>::validateLengthOfData()
 template <typename T>
 void Container<T>::getSymbolDistribution()
 {
+    bool codonsMapped = false;
+
     // Loop through each character in the data
     for(char &c : data)
     {
@@ -112,6 +119,17 @@ void Container<T>::getSymbolDistribution()
             // Otherwise insert the base into the map
             baseDistribution.insert(pair<char, int>(c, 1));
         }
+
+        bases.push_back(generateAlphabet(c));
+
+        // Add an object for the base to the base list
+        if(!codonsMapped)
+        {
+            codonsMapped = true;
+            bases[0].loadMapping(mapFileName);
+            mappedCodons = bases[0].mapCodons();
+        }
+
     }
 
     // Print out the base distribution
@@ -147,7 +165,7 @@ void Container<T>::listDataContents()
 
 // Process the codons within the data file
 template <typename T>
-void Container<T>::processCodons(multimap<string, string> mappedCodons)
+void Container<T>::processCodons()
 {
     int charNum = 0;
     int sequenceNum = 1;
@@ -161,7 +179,7 @@ void Container<T>::processCodons(multimap<string, string> mappedCodons)
     cout << endl << "==Codon Processing==" << endl;
 
     // Search for a start codon
-    for(char &c : data)
+    for(auto base : bases)
     {
         // Match the codon against the mapped ones
         if(charNum >= 3)
@@ -204,7 +222,7 @@ void Container<T>::processCodons(multimap<string, string> mappedCodons)
         }
 
         // Add the char to the codon string
-        codon += c;
+        codon += base.getBase();
         charNum++;
     }
 

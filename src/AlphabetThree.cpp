@@ -19,6 +19,23 @@ AlphabetThree::AlphabetThree()
 // Destructor
 AlphabetThree::~AlphabetThree() {}
 
+// Set the base for the object
+void AlphabetThree::setBase(char _base)
+{
+    base = _base;
+    if(base != 'A' && base != 'B' && base != 'C')
+    {
+        cerr << "Non-standard base found. Exiting program." << endl;
+        exit(4);
+    }
+}
+
+// Get the base for the object
+char AlphabetThree::getBase()
+{
+    return base;
+}
+
 // Load the mapping data
 void AlphabetThree::loadMapping(string fileName)
 {
@@ -130,7 +147,8 @@ multimap<string, string> AlphabetThree::mapCodons()
         pos = 0;
         for(int i = 0; i < numCodons; i++)
         {
-            if (line.find(',', pos) == string::npos) {
+            if (line.find(',', pos) == string::npos)
+            {
                 mappedCodons.insert(pair<string, string>(name, line));
                 break;
             }
@@ -144,7 +162,12 @@ multimap<string, string> AlphabetThree::mapCodons()
             line = line.substr(line.find_first_of("ABC"), line.length());
             pos = 0;
         }
+
+        line.~string();
+        lineCopy.~string();
+        name.~string();
     }
+
 
     return mappedCodons;
 }

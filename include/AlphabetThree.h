@@ -20,6 +20,7 @@ class AlphabetThree
 {
 private:
     int numLines;
+    char base;
     vector<string> possibleCodons;
     string* mapData;
     multimap<string, string> mappedCodons;
@@ -27,6 +28,8 @@ private:
 public:
     AlphabetThree();
     ~AlphabetThree();
+    void setBase(char _base);
+    char getBase();
     void loadMapping(string fileName);
     void checkMapping();
     multimap<string, string> mapCodons();

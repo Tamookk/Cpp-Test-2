@@ -21,6 +21,23 @@ AlphabetFour::AlphabetFour()
 // Destructor
 AlphabetFour::~AlphabetFour() {}
 
+// Set the base for the object
+void AlphabetFour::setBase(char _base)
+{
+    base = _base;
+    if(base != 'A' && base != 'C' && base != 'G' && base != 'T')
+    {
+        cerr << "Non-standard base found. Exiting program." << endl;
+        exit(4);
+    }
+}
+
+// Get the base for the object
+char AlphabetFour::getBase()
+{
+    return base;
+}
+
 // Load the mapping data
 void AlphabetFour::loadMapping(string fileName)
 {
@@ -147,6 +164,8 @@ multimap<string, string> AlphabetFour::mapCodons()
             pos = 0;
         }
     }
+
+    checkMapping();
 
     return mappedCodons;
 }

@@ -43,27 +43,19 @@ int main(int argc, char* argv[])
     // and do the required processing on the codon mapping and data file.
     if(alphabetNum == 3)
     {
-        Container<AlphabetThree> cont(dataFileName);
-        AlphabetThree alphabet = cont.generateAlphabet();
+        Container<AlphabetThree> cont(codonFileName, dataFileName);
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
         cont.listDataContents();
-        alphabet.loadMapping(codonFileName);
-        multimap<string, string> mappedCodons = alphabet.mapCodons();
-        alphabet.checkMapping();
-        cont.processCodons(mappedCodons);
+        cont.processCodons();
     }
     else if(alphabetNum == 4)
     {
-        Container<AlphabetFour> cont(dataFileName);
-        AlphabetFour alphabet = cont.generateAlphabet();
+        Container<AlphabetFour> cont(codonFileName ,dataFileName);
         cont.validateLengthOfData();
         cont.getSymbolDistribution();
         cont.listDataContents();
-        alphabet.loadMapping(codonFileName);
-        multimap<string, string> mappedCodons = alphabet.mapCodons();
-        alphabet.checkMapping();
-        cont.processCodons(mappedCodons);
+        cont.processCodons();
     }
 
     return 0;

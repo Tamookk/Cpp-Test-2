@@ -20,6 +20,7 @@ class AlphabetFour
 {
 private:
     int numLines;
+    char base;
     vector<string> possibleCodons;
     string* mapData;
     multimap<string, string> mappedCodons;
@@ -27,6 +28,8 @@ private:
 public:
     AlphabetFour();
     ~AlphabetFour();
+    void setBase(char _base);
+    char getBase();
     void loadMapping(string filename);
     void checkMapping();
     multimap<string, string> mapCodons();
